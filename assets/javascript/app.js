@@ -18,6 +18,8 @@ $(document).ready(function () {
     let addDest;
     let addTtime;
     let addFreq;
+    let convertedGMTime;
+    let convertedSTime;
     let nextArrival;
     let minAway;
 
@@ -28,7 +30,8 @@ $(document).ready(function () {
         $('#destination').empty();
         $('#traintime').empty();
         $('#frequency').empty();
-
+        
+        //collect user input values and remove unecessary spaces
         addTrain = $("#trainname").val().trim();
         addDest = $("#destination").val().trim();
         addTtime = $("#traintime").val().trim();
@@ -41,19 +44,19 @@ $(document).ready(function () {
             train_time: addTtime,
             frequency: addFreq,
             dataAdded: firebase.database.ServerValue.TIMESTAMP
-
         });
 
         console.log('working');
 
     });
-
+    //function to grab values from the database to display in the table
     database.ref().on('child_added', function(childSnapshot) {
         addTrain = childSnapshot.val().train;
         addDest = childSnapshot.val().destination;
         addTtime = childSnapshot.val().train_time;
         addFreq =  childSnapshot.val().frequency;
 
+        //set variables for new rows and column values
         let rows = $('<tr>');
         let colTrain = $('<td>');
         let colDest = $('<td>');
@@ -61,18 +64,31 @@ $(document).ready(function () {
         let colNext = $('<td>');
         let colMinto = $('<td>');
 
+        //MOMENT.JS
+        //calculate next arrival based on current timestamp
+        let currentTime = firebase.database.ServerValue.TIMESTAMP;
+        console.log(currentTime);
+        convertedMTime = moment(addTtime, "HH:mm", true);
+        console.log(convertedGMTime);
+
+        nextArrival = addTtime - addFreq;
+        minAway = currentTime - nextArrival;
+
+        //add text to columns
         colTrain.text(addTrain);
         colDest.text(addDest);
         colFreq.text(addFreq);
         colNext.text(nextArrival);
         colMinto.text(minAway);
 
+        //append columns to the row
         rows.append(colTrain);
         rows.append(colDest);
         rows.append(colFreq);
         rows.append(colNext);
         rows.append(colMinto);
 
+        //append row to the table body
         $('#tableBody').append(rows);
 
     })
