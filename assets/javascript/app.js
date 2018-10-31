@@ -25,11 +25,7 @@ $(document).ready(function () {
     //On click event to grab user input and send to the database
     $("#submit").on("click", function (event) {
         event.preventDefault();
-        $('#trainname').empty();
-        $('#destination').empty();
-        $('#traintime').empty();
-        $('#frequency').empty();
-        
+
         //collect user input values and remove unecessary spaces
         addTrain = $("#trainname").val().trim();
         addDest = $("#destination").val().trim();
@@ -44,7 +40,10 @@ $(document).ready(function () {
             frequency: addFreq,
             dataAdded: firebase.database.ServerValue.TIMESTAMP
         });
-
+        document.getElementById('trainname').value = '';
+        document.getElementById('destination').value = '';
+        document.getElementById('traintime').value = '';
+        document.getElementById('frequency').value = '';
         console.log('working');
 
     });
