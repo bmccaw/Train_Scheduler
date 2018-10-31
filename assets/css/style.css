@@ -1,0 +1,13 @@
+body {
+    background-image: url(../images/train-stationbg.jpeg);
+    background-attachment: fixed;
+}
+h1, .jumbotron{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: gray;
+    font-weight: bold;
+}
+.card-header {
+    background-color: gray;
+    font-weight: bold;
+}

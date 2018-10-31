@@ -15,6 +15,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+
+
 
 </head>
 
@@ -27,8 +31,8 @@
     </div>
     <div class="container">
         <div class="card">
-            <div class="card-header">
-                Current Train Schedule
+            <div class="card-header"><i class="fas fa-clock"></i>
+                 Current Train Schedule
             </div>
             <div class="card-body">
                 <table class="table">
@@ -50,8 +54,8 @@
     <br>
     <div class="container">
         <div class="card">
-            <div class="card-header">
-                Add Train
+            <div class="card-header"><i class="fas fa-train"></i>
+                 Add Train
             </div>
             <div class="card-body">
                 <form>
@@ -71,7 +75,7 @@
                         <label for="frequency">Frequency (min)</label>
                         <input type="number" class="form-control" id="frequency" placeholder="60">
                     </div>
-                    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                    <button type="submit" class="btn btn-secondary" id="submit">Submit</button>
                 </form>
             </div>
         </div>

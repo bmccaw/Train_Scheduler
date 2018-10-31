@@ -18,8 +18,7 @@ $(document).ready(function () {
     let addDest;
     let addTtime;
     let addFreq;
-    let convertedGMTime;
-    let convertedSTime;
+    let convertedTtime;
     let nextArrival;
     let minAway;
 
@@ -65,20 +64,24 @@ $(document).ready(function () {
         let colMinto = $('<td>');
 
         //MOMENT.JS
-        //calculate next arrival based on current timestamp
-        let currentTime = firebase.database.ServerValue.TIMESTAMP;
+        //calculate next arrival based on First train and frequency -- First train time plus frequency
+        //calculate minutes away based on current time and frequency -- Current Time 
+        let currentTime = moment();
         console.log(currentTime);
-        convertedMTime = moment(addTtime, "HH:mm", true);
-        console.log(convertedGMTime);
-
-        nextArrival = addTtime - addFreq;
-        minAway = currentTime - nextArrival;
+        convertedTtime = moment(addTtime, "hh:mm").subtract(1, "years");
+        console.log(convertedTtime);
+        let diffTime = moment().diff(moment(convertedTtime), "minutes");
+        let tRemainder = diffTime % addFreq;
+        minAway = addFreq - tRemainder;
+        nextArrival = moment().add(minAway, "minutes");
+        console.log(nextArrival);
+        let nextArrivalFormatted = moment(nextArrival).format("hh:mm A");
 
         //add text to columns
         colTrain.text(addTrain);
         colDest.text(addDest);
         colFreq.text(addFreq);
-        colNext.text(nextArrival);
+        colNext.text(nextArrivalFormatted);
         colMinto.text(minAway);
 
         //append columns to the row
