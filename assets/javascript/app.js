@@ -21,6 +21,9 @@ $(document).ready(function () {
     let convertedTtime;
     let nextArrival;
     let minAway;
+    let getKey = '';
+    let dataRef= config.databaseURL;
+    console.log(dataRef);
 
     //On click event to grab user input and send to the database
     $("#submit").on("click", function (event) {
@@ -48,11 +51,11 @@ $(document).ready(function () {
 
     });
     //function to grab values from the database to display in the table
-    database.ref().on('child_added', function(childSnapshot) {
+    database.ref().on('child_added', function (childSnapshot) {
         addTrain = childSnapshot.val().train;
         addDest = childSnapshot.val().destination;
         addTtime = childSnapshot.val().train_time;
-        addFreq =  childSnapshot.val().frequency;
+        addFreq = childSnapshot.val().frequency;
 
         //set variables for new rows and column values
         let rows = $('<tr>');
@@ -61,6 +64,7 @@ $(document).ready(function () {
         let colFreq = $('<td>');
         let colNext = $('<td>');
         let colMinto = $('<td>');
+        let colRemove = $('<td>')
 
         //MOMENT.JS
         //calculate next arrival based on First train and frequency -- First train time plus frequency
@@ -82,17 +86,29 @@ $(document).ready(function () {
         colFreq.text(addFreq);
         colNext.text(nextArrivalFormatted);
         colMinto.text(minAway);
-
+        colRemove.html("<input type='submit' value='Remove' class='remove-train btn btn-secondary btn-sm'>");
         //append columns to the row
         rows.append(colTrain);
         rows.append(colDest);
         rows.append(colFreq);
         rows.append(colNext);
         rows.append(colMinto);
-
+        rows.append(colRemove);
         //append row to the table body
         $('#tableBody').append(rows);
 
     })
+
+        // function editRow() {
+
+        // }
+
+        //Remove Function -- currently removing from the table but not from the database
+        $('body').on('click', '.remove-train', function () {
+            $(this).closest('tr').remove();
+            getKey = $(this).parent().parent().attr('id');
+            dataRef.child(getKey).remove(); 
+        });
+
 
 });
